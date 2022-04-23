@@ -1,0 +1,176 @@
+<div class="modal fade" id="aide" tabindex="-1" aria-labelledby="aideLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-scrollable modal-xl">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="aidelLabel">Aide</h5>
+			</div>
+			<div class="modal-body">
+				<h5>I - INTRODUCTION</h5>
+					<p>
+						Cet utilitaire permet de contrôler les flux vidéo provenant du, ou des providers lors d'une production.
+						<br>
+						Il affiche de 1 à 12 flux vidéo en simultanée.
+						<br>
+						Le lecteur vidéo utilisé est celui fourni par le fournisseur de flux quand celui-ci le propose.
+						<br>
+						Les nouveautés par rapport à la version précédente sont :
+						<br>
+						- Choix d'afficher endre 1, 2, 3, 4, 6, 9 et 12 vues sur la même page.
+						<br>
+						- L'édition des liens ne concerne que le lecteur vidéo.
+						<br>
+						- Affichage responsive pour compatibilité avec les appareils nomades.
+					</p>
+				<h5>II - EDITION</h5>
+					<p>
+						En cliquant sur le numéro de la vidéo, qui est dans le bouton bleu en haut à gauche du player, on accède au formulaire pour renseigner le flux.				
+						<br>
+						La première ligne reprends les informations actuelles du lecteur vidéo.
+						<br>
+						La mise à jour du lien se fait en remplissant (optionnel) le titre et le service.
+						<br>
+						Le champs "URL de la vidéo" doit être renseigné avec le lien contenu dans la constante SRC de la balise iframe fournie par le fournisseur de flux.
+						<br>
+						<b>Exemple sur un lien d'intégration "Youtube"</b> :
+						<br>
+						<textarea class="form-control" rows="2"><iframe width="560" height="315" src="https://www.youtube.com/embed/MsN0_WNXvh8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></textarea>
+						La partie à copier/coller est :
+						<textarea class="form-control" rows="1">https://www.youtube.com/embed/MsN0_WNXvh8</textarea>
+					</p>
+				<h5>III - RECUPERATION DES LIENS</h5>
+					<p>
+					Ci-dessous, quelques exemples pour récupérer le lien chez certain fournisseurs.
+					</p>
+					<p>
+					<span class="badge bg-danger">YOUTUBE</span>
+					<br>
+					<span style="color: grey;">[iframe width="560" height="315" src="</span><mark>https://www.youtube.com/embed/qLINONEDT6U</mark><span style="color: grey;">" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen> [/iframe]</span>
+					</p>
+					<p>
+					<span class="badge bg-danger">FACEBOOK</span>
+					<br>
+					<span style="color: grey;">[iframe src="<mark>https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FBENBOY26%2Fvideos%2F677457100062212%2F&show_text=false&width=560&t=0</mark>" width="560" height="314" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"> [/iframe]</span>
+					</p>
+					<p>
+					<span class="badge bg-danger">VIMEO</span>
+					<br>
+					<span style="color: grey;">[iframe src="<mark>https://player.vimeo.com/video/684542460?h=782c09adc7&title=0&byline=0&portrait=0</mark>" width="640" height="360" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen>[/iframe]</span>
+					</p>
+				<h5>IV - INSTALLATION</h5>
+					<p>
+					Ce script est sous license libre.
+					<br>
+					Ce script doit être installé sur un serveur Internet utilisant les technologies 
+					<a href="https://httpd.apache.org/" target="_new">APACHE</a>, 
+					<a href="https://www.php.net/" target="_new">PHP</a>
+					<a href="https://www.mysql.com/" target="_new">MYSQL</a>
+					et 
+					<a href="https://www.phpmyadmin.net/" target="_new">PHPMYADMIN</a> 
+					pour administrer la base de données.
+					<br>
+					Les sources 
+					<a href="https://getbootstrap.com/" target="_new">BOOTSTRAP</a>
+					sont fournies avec le script.
+					</p>
+					<h6>ETAPE 1</h6>
+					<p>
+					Copier le contenu du dossier dans un répertoire accessible sur votre serveur web.
+					</p>
+					<h6>ETAPE 2</h6>
+					<p>
+					Créer une base de données MYSQL ou utiliser une déjà existante et rajouter deux tables : services et stream :
+					<br>
+					<textarea class="form-control" rows="20">CREATE TABLE services (
+CREATE TABLE services (
+  id int(11) NOT NULL,
+  providers text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO services (id, providers) VALUES
+(1, 'Youtube'),
+(2, 'Daylimotion'),
+(3, 'Vimeo'),
+(4, 'Amazon'),
+(5, 'Twitch'),
+(6, 'Facebook'),
+(7, 'Infomaniak'),
+(8, 'Ustream'),
+(9, 'Dacast'),
+(10, 'Clevercast'),
+(11, 'Boxcast'),
+(12, 'ESPxMedia'),
+(13, 'IBM Video Streaming'),
+(14, 'Meridix'),
+(15, 'Ministerio TV'),
+(16, 'LinkedIn'),
+(17, 'Restream'),
+(18, 'Scale Engine'),
+(19, 'Streaming Video Provider'),
+(20, 'Wowza'),
+(21, 'Stream Shark');
+
+CREATE TABLE stream (
+  id int(11) NOT NULL,
+  titre text NOT NULL,
+  url text NOT NULL,
+  service text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+INSERT INTO stream (id, titre, url, service) VALUES
+(1, 'Wow Unreal 5', 'https://www.youtube.com/embed/_r862KvbVn4', 'Youtube'),
+(2, 'France Info', 'https://www.youtube.com/embed/Z-Nwo-ypKtM', 'Youtube'),
+(3, 'Unreal Engine', 'https://www.youtube.com/embed/Vd6hAK3HlCM', 'Youtube'),
+(4, 'Sport', 'https://player.vimeo.com/video/290120770?h=d6a8a5d5b8&color=ffffff&title=0&byline=0&portrait=0&badge=0', 'Vimeo'),
+(5, 'BFMTV', 'https://www.dailymotion.com/embed/video/x89via0?autoplay=1', 'Daylimotion'),
+(6, 'Skynews', 'https://www.youtube.com/embed/9Auq9mYxFEE', 'Youtube'),
+(7, 'Euronews', 'https://www.youtube.com/embed/sPgqEHsONK8', 'Youtube'),
+(8, 'Wow Dragon Flight', 'https://www.youtube.com/embed/-nZ_e9wAWxw', 'Youtube'),
+(9, 'Diablo', 'https://www.youtube.com/embed/-WWDCa9Yz1A', 'Youtube'),
+(10, 'Cnews Live', 'https://www.dailymotion.com/embed/video/x3b68jn?autoplay=1', 'Daylimotion'),
+(11, 'GrandMa Tips', 'https://www.youtube.com/embed/EuIxM58dsbM', 'Youtube'),
+(12, 'Les Kassos', 'https://www.youtube.com/embed/o7SuM1vAAGI', 'Youtube');
+
+ALTER TABLE services
+  ADD PRIMARY KEY (id);
+
+ALTER TABLE stream
+  ADD PRIMARY KEY (id);
+
+ALTER TABLE services
+  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+ALTER TABLE stream
+  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+COMMIT;</textarea>
+					<br>
+					La table "services" peut être modifiée en fonction de choix personnel.
+					<br>
+					La table "stream" contient déjà des liens d'exemples qui peuvent êtres obsolètes le jour de la mise en place du script sur un nouveau serveur.
+					</p>
+					<h6>ETAPE 3</h6>
+					<p
+					Modifier le fichier "connect.php" qui se trouve dans le répertoire du script.
+					<br>
+					Entrer les informations liées au serveur Internet utilisé :
+					<textarea class="form-control" rows="1">$bdd = new PDO('mysql:host=localhost;port=3306;dbname=nom_de_la_base_de_donnee;charset=utf8', 'login', 'motdepasse');</textarea>
+					<br>
+					<b>HOST</b> : doit comporter le host sur lequel est hébergé la base de donnée. Sur un serveur unique pour APACHE et  MYSQL, le plus souvent on reste en localhost. Sinon il faut regarder la notice d'utilisation fournie par le fournisseur de service.
+					<br>
+					<b>PORT</b> : Le port par défaut est le 3306. Le modifier si les informations du serveur MYSQL sont différentes
+					<br>
+					<b>DBNAME</b> : doit comporter le nom de la base de données utilisée.
+					<br>
+					A la place de <b>LOGIN</b> et <b>MOTDEPASSE</b>, entrer les informations d'accès à la base de données fournies par le fournisseur de service.
+					</p>
+					<h6>ETAPE 4</h6>
+					<p>
+					Dans un navigateur, écrire l'adresse correspondante à votre serveur et le dossier contenant le script. Par exemple, https://monsite.com/moniteur/". 
+					</p>
+				<h5>V - CONCLUSION</h5>
+					<p>
+					Ce script est fonctionnel avec les navigateur Google Chrome, Microsoft Edge, Firefox, Brave, Opera sur PC avec une résolution de 1920 x 1080 pixels.
+			</div>
+		</div>
+	</div>
+</div>
